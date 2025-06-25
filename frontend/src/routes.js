@@ -1,26 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
-import UserHome from "./views/UserHome.vue";
-import NewHabit from "./views/NewHabit.vue";
-import EditHabit from "./views/EditHabit.vue";
-import UserHabitList from "./views/userHabitList.vue";
-
 const routes = [
-    {
-        path: '/',
-        component: UserHome,
-    },
-    {
-        path: '/addHabit',
-        component: NewHabit
-    },
-    {
-        path: '/editHabit/:id',
-        component: EditHabit
-    },
-    {
-        path: '/userHabits',
-        component: UserHabitList
-    }
+    
 ]
 
 const router = createRouter({

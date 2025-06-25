@@ -33,7 +33,7 @@ exports.auth = (req, res, next) => {
         req.user = payload;
 
     }catch(err){
-        return res.status(404).send({
+        return res.status(403).send({
             stats: 'error',
             message: 'Token invalido',
         });

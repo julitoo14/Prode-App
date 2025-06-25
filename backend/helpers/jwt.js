@@ -7,9 +7,11 @@ const secret = 'SECRETAA';
 const createToken = (user) => {
     const payload = {
         userName: user.userName,
-        id: user._id,
+        email: user.email,
+        _id: user._id,
+        role: user.role,
         iat: moment().unix(),
-        exp: moment().add(1440 , "minutes")
+        exp: moment().add(44460 , "minutes")
     };
 
     return jwt.encode(payload, secret);
