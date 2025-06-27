@@ -2,7 +2,7 @@ const { z } = require('zod');
 const mongoose = require('mongoose');
 
 const registerSchema = z.object({
-    userName: z.string().min(5).max(16).toLowerCase().regex(/^[a-zA-Z0-9]+$/),
+    userName: z.string().min(5).max(16).regex(/^[a-zA-Z0-9]+$/),
     password: z.string().min(8).max(16),
     email: z.string().email().toLowerCase()
 });
@@ -19,6 +19,10 @@ const objectIdSchema = z.union([
     z.instanceof(mongoose.Types.ObjectId)
 ]);
 
+const editUserSchema = z.object({
+    userName: z.string().min(5).max(16).regex(/^[a-zA-Z0-9]+$/)
+});
+
 const createTournamentSchema = z.object({
     name: z.string().min(6).max(20),
     competition: objectIdSchema,
@@ -28,5 +32,11 @@ const createTournamentSchema = z.object({
     rules: z.enum(['default', 'partial', 'difference']).default('default'),
 })
 
+const updateTournamentSchema = z.object({
+    name: z.string().min(6).max(20).optional(),
+    status: z.enum(['pending', 'active', 'completed']).optional(),
+    rules: z.enum(['default', 'partial', 'difference']).optional(),
+    password: z.string().min(4).max(16).optional(),
+});
 
-module.exports = { registerSchema, loginSchema, createTournamentSchema };
+module.exports = { registerSchema, loginSchema, createTournamentSchema, editUserSchema, updateTournamentSchema };

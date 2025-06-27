@@ -1,7 +1,7 @@
 const Tournament = require('../models/Tournament');
 const Competition = require('../models/Competition');
 const User = require('../models/User');
-const { createTournamentSchema } = require('../helpers/validationSchemas');
+const { createTournamentSchema, updateTournamentSchema } = require('../helpers/validationSchemas');
 
 const createTournament = async(params) => {
     try{
@@ -29,6 +29,35 @@ const createTournament = async(params) => {
     }
 }
 
+const getTournament = async(id) => {
+        const tournament = await Tournament.findById(id).populate('competition').populate('creator');
+        if (!tournament) {
+            const err = new Error("Tournament not found");
+            err.status = 404;
+            throw err;
+          }
+        return tournament;
+
+}
+
+const updateTournament = async(id, creatorId, params) => {
+    const validatedParams = updateTournamentSchema.parse(params);
+    console.log(validatedParams);
+    const tournament = await Tournament.findById(id);
+    if(!tournament){
+        const err = new Error("Tournament not found");
+        err.status = 404;
+        throw err;
+    }
+    if(tournament.creator.toString() !== creatorId.toString()){
+        throw new Error("User is not the creator of the tournament");
+    }
+    const updatedTournament = await Tournament.findByIdAndUpdate(id, validatedParams, { new: true });
+    return updatedTournament;
+}
+
 module.exports = {
-    createTournament
+    createTournament,
+    getTournament,
+    updateTournament
 }

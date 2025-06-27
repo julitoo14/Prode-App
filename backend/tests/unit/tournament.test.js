@@ -57,3 +57,103 @@ test('should not create a tournament with invalid competition', async () => {
     })).rejects.toThrow();
 });
 
+test('should get an existing tournament', async () => {
+    
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+
+    const user = await User.create({
+        userName: 'Test User',
+        password: 'Test Password',
+        email: 'test@test.com',
+    });
+
+    const tournament = await tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    });
+
+    const retrievedTournament = await tournamentService.getTournament(tournament._id);
+
+    expect(retrievedTournament).toBeDefined();
+    expect(retrievedTournament.name).toBe('Test Tournament');
+    expect(retrievedTournament.competition.name).toBe('Test Competition');
+    expect(retrievedTournament.creator.userName).toBe('Test User');
+    expect(retrievedTournament.password).toBe('Test');
+});
+
+test('should not get a tournament with invalid id', async () => {
+    await expect(tournamentService.getTournament('invalid-id-string')).rejects.toThrow();
+});
+
+test('should update a tournament if user is creator', async () => {
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+
+    const user = await User.create({
+        userName: 'Test User',
+        password: 'Test Password',
+        email: 'test@test.com',
+    });
+
+    const tournament = await tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    });
+
+    const updatedTournament = await tournamentService.updateTournament(tournament._id, user._id, {
+        name: 'Updated Tournament',
+    });
+
+    expect(updatedTournament).toBeDefined();
+    expect(updatedTournament.name).toBe('Updated Tournament');
+    expect(updatedTournament.password).toBe('Test');
+});
+
+test('should not update a tournament if user is not creator', async () => {
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+
+    const user = await User.create({
+        userName: 'Test User',
+        password: 'Test Password',
+        email: 'test@test.com',
+    });
+
+    const tournament = await tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    });
+    
+    const user2 = await User.create({
+        userName: 'Test User 2',
+        password: 'Test Password 2',
+        email: 'test2@test.com',
+    });
+
+    await expect(tournamentService.updateTournament(tournament._id, user2._id, {
+        name: 'Updated Tournament',
+    })).rejects.toThrow('User is not the creator of the tournament');
+});
+
+test('should not update a tournament with invalid id', async () => {
+    await expect(tournamentService.updateTournament('invalid-id-string', 'invalid-id-string', {
+        name: 'Updated Tournament',
+    })).rejects.toThrow();
+});
+
+
+
+
+
+
+

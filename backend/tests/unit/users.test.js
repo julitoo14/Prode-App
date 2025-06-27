@@ -196,4 +196,64 @@ describe('User Service', () => {
         await expect(userService.getUserById('123')).rejects.toThrow("Cast to ObjectId failed for value \"123\" (type string) at path \"_id\"");
     });
 
+    test('Debería editar un usuario correctamente', async () => {
+        const userData = {
+            userName: 'testuser',
+            email: 'test@example.com',
+            password: 'password123'
+        };
+
+        const registeredUser = await userService.register(userData);
+        const updatedUser = await userService.editUser(registeredUser._id, { userName: 'testuser2' });
+        expect(updatedUser).toBeDefined();
+        expect(updatedUser._id).toBeDefined();
+        expect(updatedUser.userName).toBe('testuser2');
+        expect(updatedUser).not.toHaveProperty('password');
+    });
+
+    test('Debería eliminar un usuario correctamente', async () => {
+        const userData = {
+            userName: 'testuser',
+            email: 'test@example.com',
+            password: 'password123'
+        };
+        const registeredUser = await userService.register(userData);
+        const deletedUser = await userService.deleteUser(registeredUser._id);
+        expect(deletedUser).toBe(true);
+        await expect(userService.getUserById(registeredUser._id)).rejects.toThrow("User not found");
+    });
+
+    test('Debería obtener todos los usuarios correctamente', async () => {
+        const userData = {
+            userName: 'testuser',
+            email: 'test@example.com',
+            password: 'password123'
+        };
+        const userData2 = {
+            userName: 'testuser2',
+            email: 'test2@example.com',
+            password: 'password123'
+        };
+
+        const user1 = await userService.register(userData);
+        const user2 = await userService.register(userData2);
+        const users = await userService.getAllUsers();
+        expect(users).toBeDefined();
+        expect(users.length).toBe(2);
+        expect(users[0]._id.toString()).toBe(user1._id.toString());
+        expect(users[1]._id.toString()).toBe(user2._id.toString());
+        expect(users[0].userName).toBe(user1.userName);
+        expect(users[1].userName).toBe(user2.userName);
+        expect(users[0]).toHaveProperty('role');
+        expect(users[1]).toHaveProperty('role');
+        expect(users[0]).toHaveProperty('createdAt');
+        expect(users[1]).toHaveProperty('createdAt');
+        expect(users[0]).toHaveProperty('updatedAt');
+        expect(users[1]).toHaveProperty('updatedAt');
+        expect(users[0]).not.toHaveProperty('password');
+        expect(users[1]).not.toHaveProperty('password');
+        expect(users[0]).not.toHaveProperty('email');
+        expect(users[1]).not.toHaveProperty('email');
+    });
+
 });

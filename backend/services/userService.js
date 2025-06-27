@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("../helpers/jwt");
-const { registerSchema, loginSchema } = require("../helpers/validationSchemas");
+const { registerSchema, loginSchema, editUserSchema } = require("../helpers/validationSchemas");
 
 const register = async (params) => {
     const validatedParams = registerSchema.parse(params);
@@ -37,6 +37,20 @@ const login = async (params) => {
     return { token, user: savedUser };
 }
 
+const getAllUsers = async () => {
+    const users = await User.find().select("+password +role").exec();
+    if (!users) {
+        throw new Error("No users found");
+    }
+    const savedUsers = users.map(user => {
+        const savedUser = user.toObject();
+        delete savedUser.password;
+        delete savedUser.email;
+        return savedUser;
+    });
+    return savedUsers;
+}
+
 const getUser = async (id) => {
     const user = await User.findById(id).select("+password +role").exec();
     if (!user) {
@@ -46,6 +60,7 @@ const getUser = async (id) => {
     delete savedUser.password;
     return savedUser;
 }
+
 
 const getUserById = async (id) => {
     const user = await User.findById(id).select("+password +role").exec();
@@ -59,9 +74,32 @@ const getUserById = async (id) => {
     return savedUser;
 }
 
+const editUser = async (id, params) => {
+    const validatedParams = editUserSchema.parse(params);
+    const user = await User.findByIdAndUpdate(id, validatedParams, { new: true }).exec();
+    if (!user) {
+        throw new Error("User not found");
+    }
+    const savedUser = user.toObject();
+    delete savedUser.password;
+    return savedUser;
+}
+
+
+ const deleteUser = async (id) => {
+    const deletedUser = await User.deleteOne({_id: id});
+    if(deletedUser.deletedCount === 0) {
+        throw new Error("User not found");
+    }
+    return true;
+ }
+
 module.exports = {
     register,
     login,
     getUser,
-    getUserById
+    getUserById,
+    editUser,
+    deleteUser,
+    getAllUsers
 }
