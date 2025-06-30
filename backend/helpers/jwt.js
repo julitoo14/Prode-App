@@ -11,7 +11,7 @@ const createToken = (user) => {
         _id: user._id,
         role: user.role,
         iat: moment().unix(),
-        exp: moment().add(44460 , "minutes")
+        exp: moment().add(44460 , "minutes").unix()
     };
 
     return jwt.encode(payload, secret);

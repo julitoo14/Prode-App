@@ -48,6 +48,48 @@ test('should create a tournament', async () => {
     expect(tournament.password).toBe('Test');
 });
 
+test('Should not create a tournament with inexistent creator', async () => {
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+
+    await expect(tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: '665eaa457af29df1faaa1234',
+        password: 'Test',
+    })).rejects.toThrow('Creator not found');
+});
+
+test('Should not create a tournament with existent name', async () => {
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+    
+    const user = await User.create({
+        userName: 'Test User',
+        password: 'Test Password',
+        email: 'test@test.com',
+    });
+
+    await tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    });
+
+    await expect(tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    })).rejects.toThrow('Tournament already exists');
+    
+    
+    
+});
+
 test('should not create a tournament with invalid competition', async () => {
     await expect(tournamentService.createTournament({
         name: 'Test Tournament',
@@ -151,7 +193,60 @@ test('should not update a tournament with invalid id', async () => {
     })).rejects.toThrow();
 });
 
+test('should delete a tournament if user is creator', async () => {
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+    
+    const user = await User.create({
+        userName: 'Test User',
+        password: 'Test Password',
+        email: 'test@test.com',
+    });
 
+    const tournament = await tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    });
+
+    expect(await Tournament.findById(tournament._id)).toBeDefined();
+    await tournamentService.deleteTournament(tournament._id, user._id);
+    expect(await Tournament.findById(tournament._id)).toBeNull();
+});
+
+
+test('should not delete a tournament if user is not creator', async () => {
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+    
+    const user = await User.create({
+        userName: 'Test User',
+        password: 'Test Password',
+        email: 'test@test.com',
+    });
+
+    const tournament = await tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    });
+    
+    const user2 = await User.create({
+        userName: 'Test User 2',
+        password: 'Test Password 2',
+        email: 'test2@test.com',
+    });
+
+    await expect(tournamentService.deleteTournament(tournament._id, user2._id)).rejects.toThrow('User is not the creator of the tournament');
+});
+
+test('should not delete a tournament with invalid id', async () => {
+    await expect(tournamentService.deleteTournament(new mongoose.Types.ObjectId('665eaa457af29df1faaa1234'), new mongoose.Types.ObjectId('665eaa457af29df1faaa1234'))).rejects.toThrow('Tournament not found');
+});
 
 
 

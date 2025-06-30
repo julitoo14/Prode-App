@@ -191,6 +191,13 @@ describe("POST /auth/register", () => {
         expect(res.body.user).toHaveProperty("_id");
     })
 
+    it('deberia fallar al obtener un usuario por id invalido', async () => {
+        const res = await request(app).get(`/auth/user/dsa31123das`)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json")
+        expect(res.status).toBe(400);
+    })
+
     it('deberia editar un usuario correctamente', async () => {
         await request(app).post("/auth/register").send({
             userName: "julian",
@@ -214,6 +221,29 @@ describe("POST /auth/register", () => {
         expect(res.status).toBe(200);
         expect(res.body.user).toHaveProperty("userName", "julian2");
         expect(res.body.user).not.toHaveProperty("password");
+    })
+
+    it('deberia fallar al enviar un informacion invalida al editar un usuario', async () => {
+        await request(app).post("/auth/register").send({
+            userName: "julian",
+            email: "julian@example.com",
+            password: "123456789",
+        });
+
+        const loginRes = await request(app).post("/auth/login").send({
+            email: "julian@example.com",
+            password: "123456789",
+        });
+
+        const res = await request(app)
+        .put(`/auth/user`)
+        .set("Authorization", `${loginRes.body.token}`)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json")
+        .send({
+            userName: "j",
+        });
+        expect(res.status).toBe(400);
     })
 
     it('deberia eliminar un usuario correctamente', async () => {
@@ -255,7 +285,7 @@ describe("POST /auth/register", () => {
         });
 
         const res = await request(app).get("/auth/users")
-        .set("Authorization", `${loginRes.body.token}`)
+        .set("Authorization", `Bearer ${loginRes.body.token}`)
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         expect(res.status).toBe(200);
@@ -266,6 +296,29 @@ describe("POST /auth/register", () => {
         expect(res.body.users[1]).not.toHaveProperty("password");
         expect(res.body.users[0]).not.toHaveProperty("email");
         expect(res.body.users[1]).not.toHaveProperty("email");
+    })
+
+    it('deberia fallar al obtener todos los usuarios sin usuarios registrados', async () => {
+        await request(app).post("/auth/register").send({
+            userName: "julian",
+            email: "julian@example.com",
+            password: "123456789",
+        });
+        
+        const loginRes = await request(app).post("/auth/login").send({
+            email: "julian@example.com",
+            password: "123456789",
+        });
+
+        await User.deleteMany();
+        
+        const res = await request(app).get("/auth/users")
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json")
+        .set("Authorization", `Bearer ${loginRes.body.token}`)
+
+        expect(res.status).toBe(400);
+        expect(res.body.message).toMatch(/No users found/i);
     })
 
 });

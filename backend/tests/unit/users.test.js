@@ -223,6 +223,14 @@ describe('User Service', () => {
         await expect(userService.getUserById(registeredUser._id)).rejects.toThrow("User not found");
     });
 
+    test('deberia fallar al editar un usuario inexistente', async () => {
+        await expect(userService.editUser(new mongoose.Types.ObjectId('667064000000000000000000'), { userName: 'testuser2' })).rejects.toThrow("User not found");
+    });
+
+    test('deberia fallar al eliminar un usuario inexistente', async () => {
+        await expect(userService.deleteUser(new mongoose.Types.ObjectId('667064000000000000000000'))).rejects.toThrow("User not found");
+    });
+
     test('Debería obtener todos los usuarios correctamente', async () => {
         const userData = {
             userName: 'testuser',
@@ -254,6 +262,10 @@ describe('User Service', () => {
         expect(users[1]).not.toHaveProperty('password');
         expect(users[0]).not.toHaveProperty('email');
         expect(users[1]).not.toHaveProperty('email');
+    });
+
+    test('deberia fallar al obtener usuarios sin usuarios registrados', async () => {
+        await expect(userService.getAllUsers()).rejects.toThrow("No users found");
     });
 
 });

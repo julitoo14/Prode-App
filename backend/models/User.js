@@ -4,13 +4,7 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
     userName: {
         type: String,
-        required: true,
-        validate: {
-            validator: function(v) {
-                return v.length >= 3 && v.length <= 16;
-            },
-            message: props => `${props.value} debe tener entre 3 y 16 caracteres!`
-        }
+        required: true
     },
     password: {
         type: String,
@@ -18,13 +12,7 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true,
-        validate: {
-            validator: function(v) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-            },
-            message: props => `${props.value} no es un email válido!`
-        }
+        required: true
     },
     role: {
         type: String,

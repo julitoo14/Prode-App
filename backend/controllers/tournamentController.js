@@ -70,8 +70,22 @@ const updateTournament = async(req, res) => {
     }
 }
 
+const deleteTournament = async (req, res) => {
+    try{
+        await tournamentService.deleteTournament(req.params.id, req.user._id);
+        return res.status(204).send();
+    }catch(error){
+        return res.status(400).send({
+            status: "error",
+            message: error.message,
+        });
+    }
+}
+
+
 module.exports = {
     createTournament,
     getTournament,
-    updateTournament
+    updateTournament,
+    deleteTournament
 }

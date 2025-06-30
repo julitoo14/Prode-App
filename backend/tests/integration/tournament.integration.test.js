@@ -283,11 +283,107 @@ describe('POST /tournament', () => {
         .send({
             name: ''
         });
-        console.log(res.body);
         expect(res.status).toBe(400);
         expect(res.body.message).toBe('Validation error');
 
 
+    })
+
+    it ('should delete a tournament', async () => {
+        const competition = await Competition.create({
+            name: 'Test Competition',
+        });
+
+        const user = await request(app).post('/auth/register').send({
+            userName: 'TestUser',
+            email: 'test@test.com',
+            password: '12345678',
+        });
+
+        const login = await request(app).post('/auth/login').send({
+            email: 'test@test.com',
+            password: '12345678',
+        });
+
+        const token = login.body.token;
+        const userId = user.body.user._id;
+
+        const tournament = await request(app)
+        .post('/tournament')
+        .set('Authorization', `${token}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send({
+            name: 'Test Tournament',
+            competition: competition._id,
+            creator: userId,
+            password: '12345678',
+        });
+
+        const res = await request(app)
+        .delete(`/tournament/${tournament.body.tournament._id}`)
+        .set('Authorization', `${token}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json');
+
+        expect(res.status).toBe(204);
+        expect(await Tournament.findById(tournament.body.tournament._id)).toBeNull();
+    })
+
+    it ('should not delete a tournament if user is not creator', async () => {
+        const competition = await Competition.create({
+            name: 'Test Competition',
+        });
+
+        const user = await request(app).post('/auth/register').send({
+            userName: 'TestUser',
+            email: 'test@test.com',
+            password: '12345678',
+        });
+
+        const login = await request(app).post('/auth/login').send({
+            email: 'test@test.com',
+            password: '12345678',
+        });
+
+        const token = login.body.token;
+        const userId = user.body.user._id;
+
+        const tournament = await request(app)
+        .post('/tournament')
+        .set('Authorization', `${token}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send({
+            name: 'Test Tournament',
+            competition: competition._id,
+            creator: userId,
+            password: '12345678',
+    })
+
+    const secondUser = await request(app).post('/auth/register').send({
+        userName: 'TestUser2',
+        email: 'test2@test.com',
+        password: '12345678',
+    });
+
+    const secondLogin = await request(app).post('/auth/login').send({
+        email: 'test2@test.com',
+        password: '12345678',
+    });
+
+    const secondToken = secondLogin.body.token;
+    const secondUserId = secondUser.body.user._id;
+
+    const res = await request(app)
+    .delete(`/tournament/${tournament.body.tournament._id}`)
+    .set('Authorization', `${secondToken}`)
+    .set('Content-Type', 'application/json')
+    .set('Accept', 'application/json');
+
+    expect(res.status).toBe(400);
+    expect(res.body.message).toBe('User is not the creator of the tournament');
+    expect(await Tournament.findById(tournament.body.tournament._id)).toBeDefined();
     })
 
 });

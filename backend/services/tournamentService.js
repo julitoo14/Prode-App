@@ -42,7 +42,6 @@ const getTournament = async(id) => {
 
 const updateTournament = async(id, creatorId, params) => {
     const validatedParams = updateTournamentSchema.parse(params);
-    console.log(validatedParams);
     const tournament = await Tournament.findById(id);
     if(!tournament){
         const err = new Error("Tournament not found");
@@ -56,8 +55,20 @@ const updateTournament = async(id, creatorId, params) => {
     return updatedTournament;
 }
 
+const deleteTournament = async(id, creatorId) => {
+    const tournament = await Tournament.findById(id);
+    if(!tournament){
+        throw new Error("Tournament not found");
+    }
+    if(tournament.creator.toString() !== creatorId.toString()){
+        throw new Error("User is not the creator of the tournament");
+    }
+    await tournament.deleteOne();
+}
+
 module.exports = {
     createTournament,
     getTournament,
-    updateTournament
+    updateTournament,
+    deleteTournament
 }

@@ -16,27 +16,31 @@ exports.auth = (req, res, next) => {
 
     //cleanup token
     let token = req.headers.authorization.replace(/['"]+/g, '');
+    if (token.startsWith('Bearer ')) {
+        token = token.slice(7);
+    }
 
     try{
         //decode token
         let payload = jwt.decode(token, secret);
-        let utcTime = moment().utc();
-        const expDate = moment(payload.exp);
-        if(expDate <= moment()){
-            return res.status(401).send({
-                stats: 'error',
-                message: 'Token expired'
-            });
-        }
-
         //add user data to the request
         req.user = payload;
 
     }catch(err){
+
+        if(err.message === 'Token expired'){
+            return res.status(401).send({
+                status: 'error',
+                message: 'Token expired'
+            });
+        }
+
         return res.status(403).send({
-            stats: 'error',
+            status: 'error',
             message: 'Token invalido',
+            error: err
         });
+
     }
 
     //go through
