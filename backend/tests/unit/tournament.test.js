@@ -248,7 +248,30 @@ test('should not delete a tournament with invalid id', async () => {
     await expect(tournamentService.deleteTournament(new mongoose.Types.ObjectId('665eaa457af29df1faaa1234'), new mongoose.Types.ObjectId('665eaa457af29df1faaa1234'))).rejects.toThrow('Tournament not found');
 });
 
+test('should return all tournaments' ,async () => {
+    const competition = await Competition.create({
+        name: 'Test Competition',
+    });
+    
+    const user = await User.create({
+        userName: 'Test User',
+        password: 'Test Password',
+        email: 'test@test.com',
+    });
 
+    await tournamentService.createTournament({
+        name: 'Test Tournament',
+        competition: competition._id,
+        creator: user._id,
+        password: 'Test',
+    });
+    const tournaments = await tournamentService.getAll();
+    expect(tournaments.length).toBe(1);
+    expect(tournaments[0]).toBeDefined();
+    expect(tournaments[0].password).toBeUndefined();
+});
 
-
+test('should return error if no tournaments registered', async() => {
+    await expect(tournamentService.getAll()).rejects.toThrow('No tournaments found')
+})
 

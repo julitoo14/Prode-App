@@ -3,6 +3,23 @@ const Competition = require('../models/Competition');
 const User = require('../models/User');
 const { createTournamentSchema, updateTournamentSchema } = require('../helpers/validationSchemas');
 
+const getAll = async () => {
+    const tournaments = await Tournament.find({}).exec();
+    
+    if(!tournaments || tournaments.length === 0) {
+        throw new Error("No tournaments found")
+    }
+
+    const savedTournaments = tournaments.map(tournament => {
+        const savedTournament = tournament.toObject();
+        delete savedTournament.password;
+        return savedTournament;
+    });
+
+
+    return savedTournaments;
+}
+
 const createTournament = async(params) => {
     try{
         const validatedParams = createTournamentSchema.parse(params);
@@ -66,9 +83,11 @@ const deleteTournament = async(id, creatorId) => {
     await tournament.deleteOne();
 }
 
+
 module.exports = {
     createTournament,
     getTournament,
     updateTournament,
-    deleteTournament
+    deleteTournament,
+    getAll
 }

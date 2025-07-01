@@ -45,6 +45,22 @@ const getTournament = async(req, res) => {
     }
 }
 
+const getAll = async(req, res) => {
+    try{
+        const tournaments = await tournamentService.getAll();
+        return res.status(200).send({
+            status: "success",
+            message: "Tournaments retrieved succesfully",
+            tournaments
+        })
+    }catch(error){
+        return res.status(400).send({
+            status: "error",
+            message: error.message
+        })
+    }
+}
+
 const updateTournament = async(req, res) => {
     let params = req.body;
     try{
@@ -87,5 +103,6 @@ module.exports = {
     createTournament,
     getTournament,
     updateTournament,
-    deleteTournament
+    deleteTournament,
+    getAll
 }
