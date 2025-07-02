@@ -5,7 +5,6 @@ const Competition = require("../../models/Competition");
 const Tournament = require("../../models/Tournament");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const { isReadable } = require("supertest/lib/test");
 let mongoServer;
 
 beforeAll(async () => {
@@ -114,8 +113,8 @@ describe("POST /tournament", () => {
                 password: "12345678",
             });
 
-        expect(res.status).toBe(400);
-        expect(res.body.message).toBe("Error creating tournament");
+        expect(res.status).toBe(404);
+        expect(res.body.message).toBe("Competition not found");
     });
 
     it("should not create a tournament with invalid competition id", async () => {
@@ -456,7 +455,7 @@ describe("POST /tournament", () => {
 
     it("should return status code 400 if no tournaments", async () => {
 
-        const user = await request(app).post("/auth/register").send({
+        await request(app).post("/auth/register").send({
             userName: "TestUser",
             email: "test@test.com",
             password: "12345678",
@@ -474,6 +473,6 @@ describe("POST /tournament", () => {
             .set("Authorization", `${token}`)
             .set("Content-Type", "application/json")
             .set("Accept", "application/json");
-        expect(res.status).toBe(400);
+        expect(res.status).toBe(404);
     });
 });

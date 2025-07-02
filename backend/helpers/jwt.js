@@ -1,8 +1,10 @@
 const jwt = require('jwt-simple');
 const moment = require('moment');
+const dotenv = require('dotenv');
+dotenv.config();
 
 //clave
-const secret = 'SECRETAA';
+const secret = process.env.SECRET_JWT;
 //crear funcion para generar tokens
 const createToken = (user) => {
     const payload = {
@@ -11,7 +13,7 @@ const createToken = (user) => {
         _id: user._id,
         role: user.role,
         iat: moment().unix(),
-        exp: moment().add(44460 , "minutes").unix()
+        exp: moment().add(1440, "minutes").unix()
     };
 
     return jwt.encode(payload, secret);

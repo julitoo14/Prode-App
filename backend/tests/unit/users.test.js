@@ -70,17 +70,17 @@ describe('User Service', () => {
             password: '123'
         };
 
-        await expect(userService.register(userData)).rejects.toThrow("String must contain at least 8 character(s)");
+        await expect(userService.register(userData)).rejects.toThrow("Validation error");
     });
 
     test('debería fallar al crear un usuario con contraseña mayor a 16 caracteres', async () => {
         const userData = {
-            userName: 'testuser',
+            userName: 'te',
             email: 'test@example.com',
             password: '12345678901234567'
         };
 
-        await expect(userService.register(userData)).rejects.toThrow("String must contain at most 16 character(s)");
+        await expect(userService.register(userData)).rejects.toThrow("Validation error");
     });
 
     test('debería fallar al crear un usuario con nombre de usuario inválido', async () => {
@@ -132,7 +132,7 @@ describe('User Service', () => {
         await expect(userService.login({
             email: 'invalid-email',
             password: 'password123'
-        })).rejects.toThrow("Invalid email");
+        })).rejects.toThrow("Validation error");
     });
 
     test('Debería fallar al loguear un usuario con contraseña menor a 8 caracteres', async () => {

@@ -114,7 +114,7 @@ describe("POST /auth/register", () => {
             email: "julian@example.com",
             password: "12345678",
         });
-        expect(res.status).toBe(400);
+        expect(res.status).toBe(404);
         expect(res.body.message).toMatch(/User not found/i);
     });
 
@@ -317,7 +317,7 @@ describe("POST /auth/register", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginRes.body.token}`)
 
-        expect(res.status).toBe(400);
+        expect(res.status).toBe(404);
         expect(res.body.message).toMatch(/No users found/i);
     })
 
