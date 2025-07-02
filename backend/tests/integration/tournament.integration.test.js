@@ -371,7 +371,7 @@ describe("POST /tournament", () => {
 
         const tournament = await request(app)
             .post("/tournament")
-            .set("Authorization", `${token}`)
+            .set("Authorization", `Bearer ${token}`)
             .set("Content-Type", "application/json")
             .set("Accept", "application/json")
             .send({

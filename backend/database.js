@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv')
 const { MongoMemoryServer } = require('mongodb-memory-server');
-let user= 'juuligarcia2208';
-let password= 'julito123';
+dotenv.config()
+let user= process.env.DB_USER;
+let password= process.env.DB_PASSWORD;
 let databaseName = 'production';
 
 const isTest = process.env.NODE_ENV === 'test';
@@ -14,7 +16,7 @@ try{
         const uri = mongoServer.getUri();
         mongoose.connect(uri, {dbName: databaseName});
     }else{
-        mongoose.connect(`mongodb+srv://${user}:${password}@primary.imymk61.mongodb.net/?retryWrites=true&w=majority&appName=Primary`,
+        await mongoose.connect(`mongodb+srv://${user}:${password}@primary.imymk61.mongodb.net/?retryWrites=true&w=majority&appName=Primary`,
         {dbName: databaseName});
         console.log('connected to database ' + databaseName);
     }

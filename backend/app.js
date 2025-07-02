@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const userRoutes = require('./routes/user.routes');
 const tournamentRoutes = require('./routes/tournament.routes');
-const allowedOrigins = ['http://localhost:3000', 'https://habits.juliangarciasuarez.tech'];
+const allowedOrigins = ['http://localhost:4000', 'https://habits.juliangarciasuarez.tech'];
 app.use(cors({
     origin: function (origin, callback) {
         if (allowedOrigins.includes(origin) || !origin) {
