@@ -1,5 +1,6 @@
 const { z } = require('zod');
 const mongoose = require('mongoose');
+const { format } = require('path');
 
 const registerSchema = z.object({
     userName: z.string().min(5).max(16).regex(/^[a-zA-Z0-9]+$/),
@@ -39,4 +40,20 @@ const updateTournamentSchema = z.object({
     password: z.string().min(4).max(16).optional(),
 });
 
-module.exports = { registerSchema, loginSchema, createTournamentSchema, editUserSchema, updateTournamentSchema };
+const createCompetitionSchema = z.object({
+    name: z.string().min(5).max(25),
+    format: z.string().optional(),
+    image: z.string().optional()
+})
+
+const editCompetitionSchema = z.object({
+    name: z.string().min(5).max(25).optional(),
+    format: z.string().optional(),
+    image: z.string().optional()
+}).refine((data) => {
+    return data.name !== undefined || data.format !== undefined || data.Image !== undefined;
+}, {
+    message: "Debes proporcionar al menos uno de: name, format, o Image"
+});
+
+module.exports = { registerSchema, loginSchema, createTournamentSchema, editUserSchema, updateTournamentSchema, createCompetitionSchema, editCompetitionSchema };
