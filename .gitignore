@@ -1,0 +1,4 @@
+/.idea
+/backend/coverage
+/backend/.env
+/node_modules

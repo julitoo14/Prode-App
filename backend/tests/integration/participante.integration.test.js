@@ -73,7 +73,7 @@ describe("Participante Integration Tests", () => {
             Participante.deleteOne({ _id: res.body.participante._id });
         });
 
-        it("should return 400 if the userId is right but is not found in the database", async () => {
+        it("should return 404 if the userId is right but is not found in the database", async () => {
             const res = await request(app)
                 .post("/participante")
                 .set("Authorization", `${token}`)

@@ -11,7 +11,7 @@ const create = async (params) => {
         return newPartido;
     } catch (error) {
         if (error instanceof ZodError) {
-            throw new AppError(400, 'Invalid partido data');
+            throw new AppError(400, 'Invalid partido data', error.errors);
         }
         throw new AppError(500, 'Error creating partido');
     }

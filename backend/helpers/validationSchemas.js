@@ -77,8 +77,11 @@ const editCompetitionSchema = z
         }
     );
 
+const dateStringToDate = z.string().datetime().transform((val) => new Date(val));
+const fechaSchema = z.union([z.date(), dateStringToDate]);
+
 const createPartidoSchema = z.object({
-    fecha: z.date(),
+    fecha: fechaSchema,
     competition: objectIdSchema,
     equipo1: z.string(),
     equipo2: z.string(),
@@ -88,7 +91,7 @@ const createPartidoSchema = z.object({
 });
 
 const updatePartidoSchema = z.object({
-    fecha: z.date().optional(),
+    fecha: fechaSchema.optional(),
     competition: objectIdSchema.optional(),
     equipo1: z.string().optional(),
     equipo2: z.string().optional(),
