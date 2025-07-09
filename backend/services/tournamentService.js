@@ -11,11 +11,6 @@ const {
 
 const getAll = async () => {
     const tournaments = await Tournament.find({}).exec();
-
-    if (!tournaments || tournaments.length === 0) {
-        throw new AppError(404, "No tournaments found");
-    }
-
     const savedTournaments = tournaments.map((tournament) => {
         const savedTournament = tournament.toObject();
         delete savedTournament.password;

@@ -71,8 +71,9 @@ test('Should get all competitions', async () => {
     expect(competitions.length).toBe(2);
 })
 
-test('Should reject when no competitions', async () => {
-    await expect(competitionService.getCompetitions()).rejects.toThrow('Competitions not found')
+test('Should return empty array if no competitions', async () => {
+    const competitions = await competitionService.getCompetitions();
+    expect(competitions).toEqual([]);
 })
 
 //PUT 

@@ -36,9 +36,6 @@ const getById = async (id) => {
 
 const getCompetitions = async () => {
     const competitions = await Competition.find({}).exec();
-    if(!competitions || competitions.length === 0){
-        throw new AppError(404, 'Competitions not found')
-    }
     return competitions;
 }
 // PUT

@@ -271,7 +271,10 @@ test('should return all tournaments' ,async () => {
     expect(tournaments[0].password).toBeUndefined();
 });
 
-test('should return error if no tournaments registered', async() => {
-    await expect(tournamentService.getAll()).rejects.toThrow('No tournaments found')
-})
+test('should return empty array if no tournaments registered', async() => {
+    const tournaments = await tournamentService.getAll();
+    expect(tournaments).toEqual([]);
+});
+
+
 

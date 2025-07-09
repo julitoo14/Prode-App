@@ -138,7 +138,7 @@ describe('GET /competition', () => {
         expect(res.body.competitions[0].updatedAt).toBeDefined();
     });
 
-    it('Should return error if no competitions are found', async () => {
+    it('Should return empty array if no competitions are found', async () => {
         await request(app).post("/auth/register").send({
             userName: "TestUser",
             email: "test@test.com",
@@ -156,8 +156,8 @@ describe('GET /competition', () => {
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
 
-        expect(res.status).toBe(404);
-        expect(res.body.message).toBe('Competitions not found');
+        expect(res.status).toBe(200);
+        expect(res.body.competitions).toEqual([]);
     });
 
     it('Should return a competition by id', async () => {

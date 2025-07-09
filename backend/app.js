@@ -8,6 +8,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/user.routes');
 const tournamentRoutes = require('./routes/tournament.routes');
 const competitionRoutes = require('./routes/competition.routes');
+const participanteRoutes = require('./routes/participante.routes');
 const errorHandler = require('./middlewares/errorHandler');
 const allowedOrigins = ['http://localhost:4000', 'https://habits.juliangarciasuarez.tech'];
 
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use('/auth', userRoutes);
 app.use('/tournament', tournamentRoutes);
 app.use('/competition', competitionRoutes);
+app.use('/participante', participanteRoutes);
 app.use(express.static(path.join(__dirname, '/dist')));
 app.use(errorHandler);
 

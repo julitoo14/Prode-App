@@ -264,8 +264,9 @@ describe('User Service', () => {
         expect(users[1]).not.toHaveProperty('email');
     });
 
-    test('deberia fallar al obtener usuarios sin usuarios registrados', async () => {
-        await expect(userService.getAllUsers()).rejects.toThrow("No users found");
+    test('deberia retornar un array vacio si no hay usuarios registrados', async () => {
+        const users = await userService.getAllUsers();
+        expect(users).toEqual([]);
     });
 
 });

@@ -71,9 +71,6 @@ const login = async (params) => {
 
 const getAllUsers = async () => {
     const users = await User.find().select("+password +role").exec();
-    if (!users || users.length === 0) {
-        throw new AppError(404, "No users found");
-    }
     const savedUsers = users.map((user) => {
         const savedUser = user.toObject();
         delete savedUser.password;

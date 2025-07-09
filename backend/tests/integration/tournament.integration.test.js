@@ -453,7 +453,7 @@ describe("POST /tournament", () => {
         );
     });
 
-    it("should return status code 400 if no tournaments", async () => {
+    it("should return status code 200 and empty array if no tournaments", async () => {
 
         await request(app).post("/auth/register").send({
             userName: "TestUser",
@@ -473,6 +473,7 @@ describe("POST /tournament", () => {
             .set("Authorization", `${token}`)
             .set("Content-Type", "application/json")
             .set("Accept", "application/json");
-        expect(res.status).toBe(404);
+        expect(res.status).toBe(200);
+        expect(res.body.tournaments).toEqual([]);
     });
 });

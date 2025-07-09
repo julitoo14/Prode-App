@@ -298,7 +298,7 @@ describe("POST /auth/register", () => {
         expect(res.body.users[1]).not.toHaveProperty("email");
     })
 
-    it('deberia fallar al obtener todos los usuarios sin usuarios registrados', async () => {
+    it('deberia retornar un array vacio si no hay usuarios registrados', async () => {
         await request(app).post("/auth/register").send({
             userName: "julian",
             email: "julian@example.com",
@@ -317,8 +317,8 @@ describe("POST /auth/register", () => {
         .set("Accept", "application/json")
         .set("Authorization", `Bearer ${loginRes.body.token}`)
 
-        expect(res.status).toBe(404);
-        expect(res.body.message).toMatch(/No users found/i);
+        expect(res.status).toBe(200);
+        expect(res.body.users).toEqual([]);
     })
 
 });
