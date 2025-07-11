@@ -13,7 +13,6 @@ const create = async (params) => {
         if (error instanceof ZodError) {
             throw new AppError(400, 'Invalid partido data', error.errors);
         }
-        throw new AppError(500, 'Error creating partido');
     }
 }
 
@@ -45,7 +44,6 @@ const update = async (id, params) => {
         if (error instanceof ZodError) {
             throw new AppError(400, 'Invalid partido data');
         }
-        throw new AppError(500, 'Error updating partido');
     }
 }
 

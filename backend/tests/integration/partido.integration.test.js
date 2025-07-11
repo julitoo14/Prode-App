@@ -137,7 +137,6 @@ describe('Partido Integration Tests', () => {
                     golesEquipo2: 1,
                     status: 'finished'
                 });
-            console.log(res.body)
             expect(res.status).toBe(200);
             expect(res.body.partido).toHaveProperty('golesEquipo1', 3);
             expect(res.body.partido).toHaveProperty('golesEquipo2', 1);

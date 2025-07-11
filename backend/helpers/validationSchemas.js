@@ -49,7 +49,16 @@ const updateTournamentSchema = z.object({
     status: z.enum(["pending", "active", "completed"]).optional(),
     rules: z.enum(["default", "partial", "difference"]).optional(),
     password: z.string().min(4).max(16).optional(),
-});
+}).refine((data) => {
+    return (
+        data.name !== undefined ||
+        data.status !== undefined ||
+        data.rules !== undefined ||
+        data.password !== undefined
+    );
+},
+    { message: 'Debes proporcionar al menos uno de: name, status, rules, password'}
+);
 
 const createCompetitionSchema = z.object({
     name: z.string().min(5).max(25),
@@ -110,6 +119,25 @@ const updatePartidoSchema = z.object({
     );
 }, { message: 'Debes proporcionar al menos uno de: fecha, competition, equipo1, equipo2, golesEquipo1, golesEquipo2, status' });
 
+const createPredictionSchema = z.object({
+    partido: objectIdSchema,
+    participante: objectIdSchema,
+    golesEquipo1: z.number().int().min(0),
+    golesEquipo2: z.number().int().min(0),
+    status: z.enum(['pending', 'correct', 'incorrect']).default('pending'),
+});
+
+const updatePredictionSchema = z.object({
+    golesEquipo1: z.number().int().min(0).optional(),
+    golesEquipo2: z.number().int().min(0).optional(),
+}).refine((data) => {
+    return (
+        data.golesEquipo1 !== undefined ||
+        data.golesEquipo2 !== undefined
+    );
+}, { message: 'Debes proporcionar al menos uno de: golesEquipo1, golesEquipo2, status'
+});
+
 module.exports = {
     registerSchema,
     loginSchema,
@@ -119,5 +147,7 @@ module.exports = {
     createCompetitionSchema,
     editCompetitionSchema,
     createPartidoSchema,
-    updatePartidoSchema
+    updatePartidoSchema,
+    createPredictionSchema,
+    updatePredictionSchema,
 };
