@@ -23,6 +23,10 @@ beforeAll(async () => {
 
 beforeEach(async () => {
     await Prediction.deleteMany({});
+    const date = new Date();
+    date.setMinutes(date.getMinutes() + 20);
+    partido.fecha = date;
+    await partido.save();
 })
 
 afterAll(async () => {
@@ -38,7 +42,6 @@ test('should create a prediction', async () => {
         golesEquipo1: 2,
         golesEquipo2: 1
     });
-    console.log(result);
     expect(result).toHaveProperty('_id');
     expect(result.partido.toString()).toBe(partido._id.toString());
     expect(result.participante.toString()).toBe(participante._id.toString());
@@ -182,4 +185,40 @@ test('Should delete a prediction', async () => {
 test('Should throw an error if prediction to delete not found', async () => {
     await expect(predictionService.deletePrediction('64b9f2a6c3a0b67a2d1e4f98'))
         .rejects.toThrow('Prediction not found');
+})
+
+test('Should throw an error if prediction is created less than 10 minutes before the match', async () => {
+    const date = new Date();
+    date.setMinutes(date.getMinutes() + 8);
+    partido.fecha = date;
+    await partido.save();
+
+    await expect(predictionService.create({
+        participante: participante._id,
+        partido: partido._id,
+        golesEquipo1: 2,
+        golesEquipo2: 1
+    })).rejects.toThrow('Prediction cannot be created less than 10 minutes before the match');
+})
+
+test('Should throw an error if prediction is updated less than 10 minutes before the match', async () => {
+    const date = new Date();
+    date.setMinutes(date.getMinutes() + 11);
+    partido.fecha = date;
+    await partido.save();
+
+    const prediction = await predictionService.create({
+        participante: participante._id,
+        partido: partido._id,
+        golesEquipo1: 2,
+        golesEquipo2: 1
+    });
+
+    const date2 = new Date();
+    date2.setMinutes(date2.getMinutes() + 9);
+    partido.fecha = date2;
+    await partido.save();
+
+    await expect(predictionService.update(prediction._id, {golesEquipo1: 3, golesEquipo2: 1}))
+        .rejects.toThrow('Prediction cannot be updated less than 10 minutes before the match');
 })

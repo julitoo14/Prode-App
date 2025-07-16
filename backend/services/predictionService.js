@@ -26,6 +26,13 @@ const create = async (params) => {
             throw new AppError(404, 'Partido not found');
         }
 
+        const now = new Date();
+        const matchDate = new Date(partido.fecha);
+        const diff = matchDate - now;
+        if (diff < 10 * 60 * 1000) {
+            throw new AppError(400, 'Prediction cannot be created less than 10 minutes before the match');
+        }
+
         const savedPrediction = await prediction.save();
         return savedPrediction;
     }catch(e){
@@ -63,6 +70,19 @@ const update = async (id, params) => {
         if (!prediction) {
             throw new AppError(404, 'Prediction not found');
         }
+
+        const partido = await Partido.findById(prediction.partido);
+        if (!partido) {
+            throw new AppError(404, 'Partido not found');
+        }
+
+        const now = new Date();
+        const matchDate = new Date(partido.fecha);
+        const diff = matchDate - now;
+        if (diff < 10 * 60 * 1000) {
+            throw new AppError(400, 'Prediction cannot be updated less than 10 minutes before the match');
+        }
+
         const updatedPrediction = await Prediction.findByIdAndUpdate(id, validatedParams, { new: true }).exec();
         return updatedPrediction;
     }catch(e){
