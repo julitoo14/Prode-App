@@ -53,10 +53,22 @@ async function createParticipante(user, tournament, overrides = {}) {
     });
 }
 
+const Prediction = require('../models/Prediction');
+
+async function createPrediction(partido, participante, golesEquipo1, golesEquipo2) {
+    return await Prediction.create({
+        partido: partido._id,
+        participante: participante._id,
+        golesEquipo1,
+        golesEquipo2,
+    });
+}
+
 module.exports = {
     createUser,
     createTournament,
     createCompetition,
     createPartido,
-    createParticipante
+    createParticipante,
+    createPrediction,
 }
