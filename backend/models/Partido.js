@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 
 const partidoSchema = new mongoose.Schema({
+    externalId: {
+        type: String,
+    },
     competition: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Competition',
@@ -9,6 +12,22 @@ const partidoSchema = new mongoose.Schema({
     fecha: {
         type: Date,
         required: true
+    },
+    estadio: {
+        type: String,
+        required: true,
+        default: 'Estadio Principal'
+    },
+    round: {
+        type: Number,
+    },
+    equipo1Image: {
+        type: String,
+        default: ''
+    },
+    equipo2Image: {
+        type: String,
+        default: ''
     },
     equipo1: {
         type: String,
@@ -29,6 +48,14 @@ const partidoSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'pending'
+    },
+    videoUrl: {
+        type: String,
+        default: ''
+    },
+    bannerUrl: {
+        type: String,
+        default: ''
     }
 })
 

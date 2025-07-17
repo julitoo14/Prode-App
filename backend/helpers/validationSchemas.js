@@ -90,13 +90,20 @@ const dateStringToDate = z.string().datetime().transform((val) => new Date(val))
 const fechaSchema = z.union([z.date(), dateStringToDate]);
 
 const createPartidoSchema = z.object({
-    fecha: fechaSchema,
+    externalId: z.string().optional(), // Si lo generás desde la API externa
     competition: objectIdSchema,
-    equipo1: z.string(),
-    equipo2: z.string(),
-    golesEquipo1: z.number().optional().default(0),
-    golesEquipo2: z.number().optional().default(0),
-    status: z.enum(['pending', 'completed', 'canceled']).default('pending'),
+    fecha: fechaSchema,
+    estadio: z.string().min(1).default("Estadio Principal"),
+    round: z.number().int().min(1).optional(),
+    equipo1: z.string().min(1),
+    equipo2: z.string().min(1),
+    equipo1Image: z.string().optional().default(""),
+    equipo2Image: z.string().optional().default(""),
+    golesEquipo1: z.number().int().min(0).default(0),
+    golesEquipo2: z.number().int().min(0).default(0),
+    status: z.string().default('Match not started'),
+    videoUrl: z.string().optional().default(""),
+    bannerUrl: z.string().optional().default(""),
 });
 
 const updatePartidoSchema = z.object({
