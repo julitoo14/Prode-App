@@ -19,7 +19,8 @@ const syncCompetitions = async () => {
                 {
                     externalId: comp.id,
                     name: apiComp.strLeague,
-                    badge: apiComp.strBadge
+                    image: apiComp.strBadge || null,
+                    image2: apiComp.strLogo || null,
                 },
                 { upsert: true }
             );

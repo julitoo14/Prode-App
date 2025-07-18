@@ -40,7 +40,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 2;
         partido.golesEquipo2 = 1;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);
@@ -54,7 +54,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 2;
         partido.golesEquipo2 = 1;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);
@@ -68,7 +68,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 2;
         partido.golesEquipo2 = 1;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);
@@ -85,7 +85,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 2;
         partido.golesEquipo2 = 0;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);
@@ -102,7 +102,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 1;
         partido.golesEquipo2 = 0;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);
@@ -119,7 +119,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 2;
         partido.golesEquipo2 = 2;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);
@@ -136,7 +136,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 2;
         partido.golesEquipo2 = 1;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);
@@ -153,7 +153,7 @@ describe('scoreService', () => {
 
         partido.golesEquipo1 = 2;
         partido.golesEquipo2 = 1;
-        partido.status = 'finished';
+        partido.status = 'Match Finished';
         await partido.save();
 
         await scoreService.updateScore(partido._id);

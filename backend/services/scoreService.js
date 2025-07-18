@@ -9,7 +9,7 @@ const updateScore = async (partidoId) => {
     if (!partido) {
         throw new AppError(404, 'Partido not found');
     }
-    if (partido.status !== 'finished') {
+    if (partido.status !== 'Match Finished') {
         throw new AppError(400, 'Partido is not finished yet');
     }
     // busco todas las predicciones del partido
