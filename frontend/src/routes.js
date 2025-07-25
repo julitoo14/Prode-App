@@ -1,7 +1,16 @@
-import {createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import Torneos from '@/views/Torneos.vue';
+import Partidos from '@/views/Partidos.vue';
+import PublicHome from "@/views/PublicHome.vue";
+
 const routes = [
-    
-]
+    { path: '/', component: Home },
+    {path: '/login', component: PublicHome},
+    { path: '/torneos', component: Torneos },
+    { path: '/partidos', component: Partidos },
+
+];
 
 const router = createRouter({
     history: createWebHistory(),

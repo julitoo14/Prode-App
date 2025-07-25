@@ -20,7 +20,8 @@ const getPartido = async(req, res) => {
 }
 
 const getAll = async(req, res) => {
-    const partidos = await partidoService.getAll();
+    const filters = req.query;
+    const partidos = await partidoService.getAll(filters);
     return res.status(200).json({
         status: 'success',
         message: 'Partidos retrieved successfully',

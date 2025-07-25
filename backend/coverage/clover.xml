@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1752856213955" clover="3.2.0">
-  <project timestamp="1752856213956" name="All files">
-    <metrics statements="668" coveredstatements="661" conditionals="191" coveredconditionals="167" methods="81" coveredmethods="80" elements="940" coveredelements="908" complexity="0" loc="668" ncloc="668" packages="8" files="31" classes="31"/>
+<coverage generated="1753470688438" clover="3.2.0">
+  <project timestamp="1753470688439" name="All files">
+    <metrics statements="687" coveredstatements="669" conditionals="208" coveredconditionals="176" methods="80" coveredmethods="79" elements="975" coveredelements="924" complexity="0" loc="687" ncloc="687" packages="8" files="31" classes="31"/>
     <package name="backend">
-      <metrics statements="28" coveredstatements="26" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="1"/>
+      <metrics statements="25" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="app.js" path="/Users/juliangarcia/Developer/habits-app/backend/app.js">
-        <metrics statements="28" coveredstatements="26" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="1"/>
+        <metrics statements="25" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="6" type="stmt"/>
         <line num="2" count="6" type="stmt"/>
         <line num="3" count="6" type="stmt"/>
@@ -20,24 +20,21 @@
         <line num="13" count="6" type="stmt"/>
         <line num="14" count="6" type="stmt"/>
         <line num="16" count="6" type="stmt"/>
-        <line num="18" count="141" type="cond" truecount="3" falsecount="1"/>
-        <line num="19" count="141" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="25" count="6" type="stmt"/>
+        <line num="17" count="6" type="stmt"/>
+        <line num="18" count="6" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
+        <line num="20" count="6" type="stmt"/>
+        <line num="21" count="6" type="stmt"/>
+        <line num="22" count="6" type="stmt"/>
+        <line num="23" count="6" type="stmt"/>
+        <line num="24" count="6" type="stmt"/>
         <line num="26" count="6" type="stmt"/>
-        <line num="27" count="6" type="stmt"/>
-        <line num="28" count="6" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
         <line num="29" count="6" type="stmt"/>
-        <line num="30" count="6" type="stmt"/>
-        <line num="31" count="6" type="stmt"/>
-        <line num="32" count="6" type="stmt"/>
-        <line num="34" count="6" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="37" count="6" type="stmt"/>
       </file>
     </package>
     <package name="backend.controllers">
-      <metrics statements="103" coveredstatements="103" conditionals="0" coveredconditionals="0" methods="26" coveredmethods="26"/>
+      <metrics statements="104" coveredstatements="104" conditionals="0" coveredconditionals="0" methods="26" coveredmethods="26"/>
       <file name="competitionController.js" path="/Users/juliangarcia/Developer/habits-app/backend/controllers/competitionController.js">
         <metrics statements="22" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
         <line num="1" count="6" type="stmt"/>
@@ -85,7 +82,7 @@
         <line num="43" count="6" type="stmt"/>
       </file>
       <file name="partidoController.js" path="/Users/juliangarcia/Developer/habits-app/backend/controllers/partidoController.js">
-        <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
         <line num="1" count="6" type="stmt"/>
         <line num="3" count="6" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
@@ -97,14 +94,15 @@
         <line num="22" count="6" type="stmt"/>
         <line num="23" count="1" type="stmt"/>
         <line num="24" count="1" type="stmt"/>
-        <line num="31" count="6" type="stmt"/>
-        <line num="32" count="2" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="32" count="6" type="stmt"/>
         <line num="33" count="2" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="41" count="6" type="stmt"/>
-        <line num="42" count="2" type="stmt"/>
-        <line num="43" count="1" type="stmt"/>
-        <line num="46" count="6" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="42" count="6" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="47" count="6" type="stmt"/>
       </file>
       <file name="tournamentController.js" path="/Users/juliangarcia/Developer/habits-app/backend/controllers/tournamentController.js">
         <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
@@ -376,7 +374,7 @@
       </file>
     </package>
     <package name="backend.services">
-      <metrics statements="377" coveredstatements="372" conditionals="151" coveredconditionals="136" methods="35" coveredmethods="35"/>
+      <metrics statements="398" coveredstatements="381" conditionals="172" coveredconditionals="148" methods="35" coveredmethods="35"/>
       <file name="competitionService.js" path="/Users/juliangarcia/Developer/habits-app/backend/services/competitionService.js">
         <metrics statements="42" coveredstatements="42" conditionals="16" coveredconditionals="14" methods="5" coveredmethods="5"/>
         <line num="1" count="7" type="stmt"/>
@@ -458,7 +456,7 @@
         <line num="65" count="7" type="stmt"/>
       </file>
       <file name="partidoService.js" path="/Users/juliangarcia/Developer/habits-app/backend/services/partidoService.js">
-        <metrics statements="36" coveredstatements="36" conditionals="12" coveredconditionals="10" methods="5" coveredmethods="5"/>
+        <metrics statements="57" coveredstatements="45" conditionals="33" coveredconditionals="22" methods="5" coveredmethods="5"/>
         <line num="1" count="7" type="stmt"/>
         <line num="2" count="7" type="stmt"/>
         <line num="3" count="7" type="stmt"/>
@@ -475,26 +473,47 @@
         <line num="21" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="22" count="2" type="stmt"/>
         <line num="24" count="2" type="stmt"/>
-        <line num="27" count="7" type="stmt"/>
+        <line num="27" count="7" type="cond" truecount="1" falsecount="0"/>
         <line num="28" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="32" count="7" type="stmt"/>
-        <line num="33" count="5" type="stmt"/>
-        <line num="34" count="5" type="stmt"/>
-        <line num="35" count="4" type="stmt"/>
-        <line num="36" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="37" count="2" type="stmt"/>
-        <line num="39" count="2" type="stmt"/>
-        <line num="41" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="42" count="2" type="stmt"/>
-        <line num="44" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="50" count="7" type="stmt"/>
-        <line num="51" count="4" type="stmt"/>
-        <line num="52" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="53" count="2" type="stmt"/>
-        <line num="55" count="2" type="stmt"/>
-        <line num="58" count="7" type="stmt"/>
+        <line num="30" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="34" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="38" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="42" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="49" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="56" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="64" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="76" count="7" type="stmt"/>
+        <line num="77" count="5" type="stmt"/>
+        <line num="78" count="5" type="stmt"/>
+        <line num="79" count="4" type="stmt"/>
+        <line num="80" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="81" count="2" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="85" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="86" count="2" type="stmt"/>
+        <line num="88" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="94" count="7" type="stmt"/>
+        <line num="95" count="4" type="stmt"/>
+        <line num="96" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="97" count="2" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="102" count="7" type="stmt"/>
       </file>
       <file name="predictionService.js" path="/Users/juliangarcia/Developer/habits-app/backend/services/predictionService.js">
         <metrics statements="67" coveredstatements="66" conditionals="26" coveredconditionals="23" methods="6" coveredmethods="6"/>

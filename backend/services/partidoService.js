@@ -24,8 +24,52 @@ const getById = async (id) => {
     return partido;
 }
 
-const getAll = async () => {
-    const partidos = await Partido.find();
+const getAll = async (filters = {}) => {
+    const query = {};
+
+    if (filters.round) {
+        query.round = filters.round;
+    }
+
+    if (filters.competition) {
+        query.competition = filters.competition;
+    }
+
+    if (filters.status) {
+        query.status = filters.status;
+    }
+
+    if (filters.fecha) {
+        const fecha = new Date(filters.fecha);
+        const siguienteDia = new Date(fecha);
+        siguienteDia.setDate(siguienteDia.getDate() + 1);
+        query.fecha = { $gte: fecha, $lt: siguienteDia };
+    }
+
+    if (!filters.fecha && filters.half) {
+        const year = new Date().getFullYear(); // Podés ajustar esto si querés soportar otros años
+        if (filters.half === '1') {
+            query.fecha = {
+                $gte: new Date(`${year}-01-01T00:00:00.000Z`),
+                $lt: new Date(`${year}-07-01T00:00:00.000Z`)
+            };
+        } else if (filters.half === '2') {
+            query.fecha = {
+                $gte: new Date(`${year}-07-01T00:00:00.000Z`),
+                $lt: new Date(`${year + 1}-01-01T00:00:00.000Z`)
+            };
+        }
+    }
+
+    const page = parseInt(filters.page, 10) || 1;
+    const limit = parseInt(filters.limit, 10) || 15;
+    const skip = (page - 1) * limit;
+
+    const partidos = await Partido.find(query)
+        .skip(skip)
+        .limit(limit)
+        .sort({ fecha: 1 });
+
     return partidos;
 }
 

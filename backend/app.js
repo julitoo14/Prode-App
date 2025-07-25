@@ -13,15 +13,7 @@ const partidoRoutes = require('./routes/partido.routes');
 const errorHandler = require('./middlewares/errorHandler');
 const allowedOrigins = ['http://localhost:4000', 'https://habits.juliangarciasuarez.tech'];
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}));
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/auth', userRoutes);
 app.use('/tournament', tournamentRoutes);
