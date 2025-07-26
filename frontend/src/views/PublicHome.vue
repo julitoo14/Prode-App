@@ -1,4 +1,10 @@
-<script setup lang="ts">
+<script setup>
+import { ref } from 'vue';
+import LoginModal from '../components/LoginModal.vue';
+import RegisterModal from '../components/RegisterModal.vue';
+
+const showLoginModal = ref(false);
+const showRegisterModal = ref(false);
 </script>
 
 <template>
@@ -16,15 +22,20 @@
         Participá de torneos, hacé tus pronósticos y competí con tus amigos. Demostrá que sos el mejor pronosticador de fútbol argentino.
       </p>
       <div class="flex flex-col w-3/5 md:w-full md:flex-row gap-y-4 md:gap-x-4 mx-auto mb-6 justify-center">
-        <button class="bg-green-800 text-white px-6 py-2 rounded hover:bg-green-700 transition">
+        <button @click="showLoginModal = true" class="bg-green-800 text-white px-6 py-2 rounded hover:bg-green-700 transition">
           Iniciar sesión
         </button>
-        <button
+        <button @click="showRegisterModal = true"
             class="bg-green-800 text-white px-6 py-2 rounded hover:bg-green-700 transition">
           Registrate gratis
         </button>
       </div>
 
     </div>
+    <LoginModal v-if="showLoginModal" @close="showLoginModal = false" />
+    <RegisterModal v-if="showRegisterModal" @close="showRegisterModal = false" />
   </div>
 </template>
+
+<style scoped>
+</style>

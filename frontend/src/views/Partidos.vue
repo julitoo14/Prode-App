@@ -9,7 +9,7 @@ const getPartidos = async () => {
     const response = await axios.get("http://localhost:4000/partido/all?round=3&competition=68791c0e490c3fcd8be2c899&half=2" , {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6IlByb2JhbmRvIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiX2lkIjoiNjg1MzA4OTY1ZjNlNjJlOGE0ZGJiYzgwIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTMzODA3NTYsImV4cCI6MTc1MzQ2NzE1Nn0.IFGeKqnUW9GFnyfAilEsqFmbVTuw_ftQBlacfpuXwrQ"
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       }});
     partidos.value = response.data.partidos;
   } catch (error) {
@@ -38,11 +38,15 @@ onMounted(async () => {
         >
           <div class="flex items-center justify-center gap-2 mb-2">
             <img :src="partido.equipo1Image" alt="" class="w-8 h-8 object-contain" />
+            <p v-if="partido.status != 'Not Started' " > {{partido.golesEquipo1}} </p>
             <h3 class="text-xl font-bold">{{ partido.equipo1 }} vs {{ partido.equipo2 }}</h3>
+            <p v-if="partido.status != 'Not Started' " > {{partido.golesEquipo2}} </p>
             <img :src="partido.equipo2Image" alt="" class="w-8 h-8 object-contain" />
           </div>
           <p class="mt-1">{{ new Date(partido.fecha).toLocaleDateString("es-AR", { timeZone: "America/Argentina/Buenos_Aires" }) }} - {{ new Date(partido.fecha).toLocaleTimeString("es-AR", { timeZone: "America/Argentina/Buenos_Aires", hour: '2-digit', minute: '2-digit', hour12: false }) }}</p>
           <p class="mt-1"><strong>Estadio:</strong> {{ partido.estadio }}</p>
+          <p class=""><strong>{{partido.status}}</strong></p>
+
         </div>
       </div>
     </div>

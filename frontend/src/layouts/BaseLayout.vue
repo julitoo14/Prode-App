@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar.vue";
       <Navbar class=""/>
 
       <!-- Main content -->
-      <main class="flex-1 pb-20 md:pt-20 md:pt-0">
+      <main class="flex-1 pb-20 ">
         <slot />
       </main>
 

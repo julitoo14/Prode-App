@@ -3,12 +3,15 @@ import Home from '@/views/Home.vue';
 import Torneos from '@/views/Torneos.vue';
 import Partidos from '@/views/Partidos.vue';
 import PublicHome from "@/views/PublicHome.vue";
+import Profile from '@/views/Profile.vue';
+import { useAuth } from './store/auth';
 
 const routes = [
-    { path: '/', component: Home },
-    {path: '/login', component: PublicHome},
-    { path: '/torneos', component: Torneos },
-    { path: '/partidos', component: Partidos },
+    { path: '/', component: Home, meta: { requiresAuth: true } },
+    { path: '/public', component: PublicHome },
+    { path: '/torneos', component: Torneos, meta: { requiresAuth: true } },
+    { path: '/partidos', component: Partidos, meta: { requiresAuth: true } },
+    { path: '/profile', component: Profile, meta: { requiresAuth: true } },
 
 ];
 
@@ -17,24 +20,15 @@ const router = createRouter({
     routes,
 });
 
-/*
 router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem("token");
-    if (to.meta.requiresAuth && !token) {
-        next("/login");
-    } else if (token) {
-        const decodedToken = JSON.parse(atob(token.split(".")[1]));
-        const expirationDate = new Date(decodedToken.exp);
-        if (expirationDate <= new Date()) {
-            localStorage.removeItem("token");
-            next("/login");
-        } else {
-            next();
-        }
+    const { isAuthenticated } = useAuth();
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+    if (requiresAuth && !isAuthenticated.value) {
+        next('/public');
     } else {
         next();
     }
 });
-*/
 
 export { router };
