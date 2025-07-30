@@ -10,7 +10,7 @@ const {
 } = require("../helpers/validationSchemas");
 
 const getAll = async () => {
-    const tournaments = await Tournament.find({}).exec();
+    const tournaments = await Tournament.find({}).populate('creator', 'userName').populate('competition', 'name').exec();
     const savedTournaments = tournaments.map((tournament) => {
         const savedTournament = tournament.toObject();
         delete savedTournament.password;

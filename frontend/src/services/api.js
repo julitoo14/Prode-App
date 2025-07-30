@@ -27,5 +27,14 @@ export default {
   getMe() {
     return apiClient.get('/auth/user/me');
   },
+  getCompetitions() {
+    return apiClient.get('/competition/all');
+  },
+  createTournament(tournamentData) {
+    return apiClient.post('/tournament', tournamentData);
+  },
+  getTournaments() {
+    return apiClient.get('/tournament/all');
+  },
   // Agrega otras llamadas a la API aquí
 };

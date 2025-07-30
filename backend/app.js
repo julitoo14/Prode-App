@@ -11,7 +11,6 @@ const competitionRoutes = require('./routes/competition.routes');
 const participanteRoutes = require('./routes/participante.routes');
 const partidoRoutes = require('./routes/partido.routes');
 const errorHandler = require('./middlewares/errorHandler');
-const allowedOrigins = ['http://localhost:4000', 'https://habits.juliangarciasuarez.tech'];
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,4 +25,5 @@ app.use(errorHandler);
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
+
 module.exports = app;
