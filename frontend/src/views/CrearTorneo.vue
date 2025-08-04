@@ -89,7 +89,3 @@ const createTournament = async () => {
     </div>
   </BaseLayout>
 </template>
-
-<style scoped>
-/* Estilos adicionales si son necesarios */
-</style>

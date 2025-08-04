@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1753470688438" clover="3.2.0">
-  <project timestamp="1753470688439" name="All files">
-    <metrics statements="687" coveredstatements="669" conditionals="208" coveredconditionals="176" methods="80" coveredmethods="79" elements="975" coveredelements="924" complexity="0" loc="687" ncloc="687" packages="8" files="31" classes="31"/>
+<coverage generated="1754069669409" clover="3.2.0">
+  <project timestamp="1754069669409" name="All files">
+    <metrics statements="686" coveredstatements="668" conditionals="208" coveredconditionals="176" methods="80" coveredmethods="79" elements="974" coveredelements="923" complexity="0" loc="686" ncloc="686" packages="8" files="31" classes="31"/>
     <package name="backend">
-      <metrics statements="25" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="24" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="app.js" path="/Users/juliangarcia/Developer/habits-app/backend/app.js">
-        <metrics statements="25" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="24" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="6" type="stmt"/>
         <line num="2" count="6" type="stmt"/>
         <line num="3" count="6" type="stmt"/>
@@ -18,7 +18,7 @@
         <line num="11" count="6" type="stmt"/>
         <line num="12" count="6" type="stmt"/>
         <line num="13" count="6" type="stmt"/>
-        <line num="14" count="6" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
         <line num="16" count="6" type="stmt"/>
         <line num="17" count="6" type="stmt"/>
         <line num="18" count="6" type="stmt"/>
@@ -27,9 +27,8 @@
         <line num="21" count="6" type="stmt"/>
         <line num="22" count="6" type="stmt"/>
         <line num="23" count="6" type="stmt"/>
-        <line num="24" count="6" type="stmt"/>
-        <line num="26" count="6" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
+        <line num="25" count="6" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
         <line num="29" count="6" type="stmt"/>
       </file>
     </package>

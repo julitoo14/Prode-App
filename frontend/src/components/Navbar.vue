@@ -12,8 +12,8 @@ const guestItems = [
 
 const authItems = [
   { name: 'Inicio', icon: '🏠', route: '/' },
-  { name: 'Hábitos', icon: '📅', route: '/partidos' },
-  { name: 'Progreso', icon: '🏆', route: '/torneos' },
+  { name: 'Partidos', icon: '📅', route: '/partidos' },
+  { name: 'Torneos', icon: '🏆', route: '/torneos' },
   { name: 'Perfil', icon: '👤', route: '/profile' },
 ]
 

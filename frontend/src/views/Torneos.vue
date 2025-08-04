@@ -26,7 +26,8 @@ onMounted(() => {
 <template>
   <BaseLayout>
     <div class="p-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <div
+      <RouterLink
+        :to="`/torneo/${tournament._id}`"
         v-for="tournament in tournaments"
         :key="tournament._id"
         class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-1"
@@ -45,7 +46,7 @@ onMounted(() => {
             <p class="text-gray-600 capitalize">{{ tournament.rules }}</p>
           </div>
         </div>
-      </div>
+      </RouterLink>
     </div>
   </BaseLayout>
 </template>

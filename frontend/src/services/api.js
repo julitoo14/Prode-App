@@ -36,5 +36,11 @@ export default {
   getTournaments() {
     return apiClient.get('/tournament/all');
   },
+  getTournamentById(tournamentId) {
+    return apiClient.get(`/tournament/${tournamentId}`);
+  },
+  getPartidosByCompetitionId(competitionId, round = 1) {
+    return apiClient.get(`/partido/all?competition=${competitionId}&limit=1000&half=2&round=${round}`);
+  }
   // Agrega otras llamadas a la API aquí
 };

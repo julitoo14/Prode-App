@@ -6,11 +6,13 @@ import PublicHome from "@/views/PublicHome.vue";
 import Profile from '@/views/Profile.vue';
 import CrearTorneo from '@/views/CrearTorneo.vue';
 import { useAuth } from './store/auth';
+import TorneoDetail from "@/views/TorneoDetail.vue";
 
 const routes = [
     { path: '/', component: Home, meta: { requiresAuth: true } },
     { path: '/public', component: PublicHome },
     { path: '/torneos', component: Torneos, meta: { requiresAuth: true } },
+    {path: '/torneo/:torneoId', component: TorneoDetail, meta: { requiresAuth: true } },
     { path: '/crear-torneo', component: CrearTorneo, meta: { requiresAuth: true } },
     { path: '/partidos', component: Partidos, meta: { requiresAuth: true } },
     { path: '/profile', component: Profile, meta: { requiresAuth: true } },
