@@ -36,11 +36,17 @@ export default {
   getTournaments() {
     return apiClient.get('/tournament/all');
   },
+  getParticipaciones() {
+    return apiClient.get('/participante/byUser');
+  },
   getTournamentById(tournamentId) {
     return apiClient.get(`/tournament/${tournamentId}`);
   },
-  getPartidosByCompetitionId(competitionId, round = 1) {
+  deleteTournament(tournamentId) {
+    return apiClient.delete(`/tournament/${tournamentId}`);
+  },
+  getPartidosByCompetitionId(competitionId, round = 4) {
     return apiClient.get(`/partido/all?competition=${competitionId}&limit=1000&half=2&round=${round}`);
-  }
+  },
   // Agrega otras llamadas a la API aquí
 };

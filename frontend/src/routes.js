@@ -14,7 +14,7 @@ const routes = [
     { path: '/torneos', component: Torneos, meta: { requiresAuth: true } },
     {path: '/torneo/:torneoId', component: TorneoDetail, meta: { requiresAuth: true } },
     { path: '/crear-torneo', component: CrearTorneo, meta: { requiresAuth: true } },
-    { path: '/partidos', component: Partidos, meta: { requiresAuth: true } },
+    { path: '/torneo/:torneoId/partidos', component: Partidos, meta: { requiresAuth: true } },
     { path: '/profile', component: Profile, meta: { requiresAuth: true } },
 
 ];

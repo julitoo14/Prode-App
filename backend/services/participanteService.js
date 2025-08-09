@@ -35,9 +35,30 @@ const create = async (userId, tournamentId) => {
 // GET
 
 const getAll = async () => {
+    // establecemos filtros para buscar todos los participantes de un usuario
     const participantes = await Participante.find({}).exec();
     return participantes;
 }
+
+const getByUser = async (userId) => {
+    if (!userId) {
+        throw new AppError(400, 'User ID is required');
+    }
+    
+  return await Participante.find({ user: userId })
+    .select('name tournament') // del participante solo lo necesario
+    .populate({
+      path: 'tournament',
+      select: 'name competition rules ', // campos del torneo que te interesan
+      populate: [
+        { path: 'creator', select: 'userName' },          
+        { path: 'competition', select: 'name' }    // competition.name
+      ]
+    })
+    .lean() // devuelve POJOs, más liviano y rápido para lectura
+    .exec();
+};
+
 
 const getById = async (id) => {
     const participante = await Participante.findById(id).exec();
@@ -66,6 +87,7 @@ module.exports = {
     create,
     getAll,
     getById,
+    getByUser,
     deleteParticipante
 }
 

@@ -7,12 +7,17 @@ import { useRouter } from 'vue-router';
 
 const { user } = useAuth();
 const router = useRouter();
+const participaciones = ref([]);
 const tournaments = ref([]);
+
 
 const fetchTournaments = async () => {
   try {
-    const response = await api.getTournaments();
-    tournaments.value = response.data.tournaments;
+    const response = await api.getParticipaciones();
+    console.log('Participaciones:', response.data.participantes);
+    participaciones.value = response.data.participantes;
+    tournaments.value = participaciones.value.map(p => p.tournament);
+    console.log('Torneos:', tournaments.value);
   } catch (error) {
     console.error('Error fetching tournaments:', error);
   }
@@ -25,7 +30,7 @@ onMounted(() => {
 
 <template>
   <BaseLayout>
-    <div class="p-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="p-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-2/3 mx-auto">
       <RouterLink
         :to="`/torneo/${tournament._id}`"
         v-for="tournament in tournaments"

@@ -29,6 +29,16 @@ const getById = async (req, res) => {
     })
 }
 
+const getByUser = async (req, res) => {
+    const userId = req.user._id
+    const participantes = await participanteService.getByUser(userId)
+    res.status(200).json({ 
+        participantes,
+        message: 'Participantes by user fetched successfully',
+        status: 'success'
+    })
+}
+
 const deleteParticipante = async (req, res) => {
     const { participantId, tournamentId } = req.params
     const userId = req.user._id
@@ -40,4 +50,4 @@ const deleteParticipante = async (req, res) => {
     })
 }
 
-module.exports = { create, getAll, getById, deleteParticipante }
+module.exports = { create, getAll, getById, getByUser, deleteParticipante }

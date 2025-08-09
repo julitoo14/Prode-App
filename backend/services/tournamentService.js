@@ -1,5 +1,6 @@
 const Tournament = require("../models/Tournament");
 const Competition = require("../models/Competition");
+const Participante = require("../models/Participante");
 const User = require("../models/User");
 const AppError = require("../utils/AppError");
 const { ZodError } = require("zod");
@@ -45,6 +46,14 @@ const createTournament = async (params) => {
 
         const tournament = new Tournament({ ...validatedParams });
         await tournament.save();
+
+        // Automatically create a participant for the creator
+        const participant = new Participante({
+            name: creatorExists.userName,
+            user: creatorExists._id,
+            tournament: tournament._id,
+        });
+        await participant.save();
         return tournament;
     } catch (error) {
         if (error.name === "ZodError") {
@@ -107,6 +116,8 @@ const deleteTournament = async (id, creatorId) => {
     if (tournament.creator.toString() !== creatorId.toString()) {
         throw new AppError(400, "User is not the creator of the tournament");
     }
+    // Delete all participants associated with the tournament
+    await Participante.deleteMany({ tournament: id });
     return await tournament.deleteOne();
 };
 
