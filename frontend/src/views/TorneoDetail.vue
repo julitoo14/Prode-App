@@ -185,7 +185,7 @@ onMounted(async () => {
 
                     <!-- Ver Posiciones -->
                     <router-link
-                        :to="`/torneos/${route.params.torneoId}/posiciones`"
+                        :to="`/torneo/${route.params.torneoId}/posiciones`"
                         class="w-full inline-flex items-center justify-center gap-2 text-center bg-gray-800 hover:bg-gray-900 active:bg-black text-white font-semibold py-3 sm:py-3.5 px-5 rounded-xl shadow-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 text-lg"
                         aria-label="Ver posiciones del torneo"
                     >

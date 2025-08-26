@@ -9,7 +9,7 @@ const { user } = useAuth();
     <div class="flex flex-col items-center justify-center h-full p-4">
       <h2 class="text-2xl font-semibold my-4 text-center">Bienvenido {{user.userName}}</h2>
 
-      <div class="w-full max-w-xs grid grid-cols-1 gap-5">
+      <div class="w-full max-w-xs sm:max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-5">
         <router-link to="/crear-torneo">
           <button class="w-full h-32 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-lg flex flex-col items-center justify-center text-lg transition-transform transform hover:scale-105">
             <img src="/icons/calendar.svg" alt="Crear Torneo" class="w-10 h-10 mb-2">
@@ -17,8 +17,15 @@ const { user } = useAuth();
           </button>
         </router-link>
 
-        <router-link to="/torneos">
+        <router-link to="/unirse-a-torneo">
           <button class="w-full h-32 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl shadow-lg flex flex-col items-center justify-center text-lg transition-transform transform hover:scale-105">
+            <img src="/icons/check.svg" alt="Unirse a Torneo" class="w-10 h-10 mb-2">
+            <span>Unirse a Torneo</span>
+          </button>
+        </router-link>
+
+        <router-link to="/torneos">
+          <button class="w-full h-32 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-xl shadow-lg flex flex-col items-center justify-center text-lg transition-transform transform hover:scale-105">
             <img src="/icons/briefcase.svg" alt="Ver Torneos" class="w-10 h-10 mb-2">
             <span>Ver Torneos</span>
           </button>
@@ -26,7 +33,7 @@ const { user } = useAuth();
 
         <router-link to="/competiciones">
           <button class="w-full h-32 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-xl shadow-lg flex flex-col items-center justify-center text-lg transition-transform transform hover:scale-105">
-            <img src="/icons/book.svg" alt="Ver Competiciones" class="w-10 h-10 mb-2">
+            <img src="/icons/estadistica.svg" alt="Ver Competiciones" class="w-10 h-10 mb-2">
             <span>Ver Competiciones</span>
           </button>
         </router-link>

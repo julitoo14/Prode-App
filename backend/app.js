@@ -10,6 +10,7 @@ const tournamentRoutes = require('./routes/tournament.routes');
 const competitionRoutes = require('./routes/competition.routes');
 const participanteRoutes = require('./routes/participante.routes');
 const partidoRoutes = require('./routes/partido.routes');
+const predictionRoutes = require('./routes/prediction.routes');
 const errorHandler = require('./middlewares/errorHandler');
 
 app.use(cors());
@@ -19,6 +20,7 @@ app.use('/tournament', tournamentRoutes);
 app.use('/competition', competitionRoutes);
 app.use('/participante', participanteRoutes);
 app.use('/partido', partidoRoutes);
+app.use('/prediction', predictionRoutes);
 app.use(express.static(path.join(__dirname, '/dist')));
 app.use(errorHandler);
 

@@ -7,6 +7,8 @@ import Profile from '@/views/Profile.vue';
 import CrearTorneo from '@/views/CrearTorneo.vue';
 import { useAuth } from './store/auth';
 import TorneoDetail from "@/views/TorneoDetail.vue";
+import UnirseATorneo from "@/views/UnirseATorneo.vue";
+import Posiciones from "@/views/Posiciones.vue";
 
 const routes = [
     { path: '/', component: Home, meta: { requiresAuth: true } },
@@ -14,7 +16,9 @@ const routes = [
     { path: '/torneos', component: Torneos, meta: { requiresAuth: true } },
     {path: '/torneo/:torneoId', component: TorneoDetail, meta: { requiresAuth: true } },
     { path: '/crear-torneo', component: CrearTorneo, meta: { requiresAuth: true } },
+    { path: '/unirse-a-torneo', component: UnirseATorneo, meta: { requiresAuth: true } },
     { path: '/torneo/:torneoId/partidos', component: Partidos, meta: { requiresAuth: true } },
+    { path: '/torneo/:torneoId/posiciones', component: Posiciones, meta: { requiresAuth: true } },
     { path: '/profile', component: Profile, meta: { requiresAuth: true } },
 
 ];

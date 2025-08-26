@@ -16,8 +16,8 @@ const fetchTournaments = async () => {
     const response = await api.getParticipaciones();
     console.log('Participaciones:', response.data.participantes);
     participaciones.value = response.data.participantes;
-    tournaments.value = participaciones.value.map(p => p.tournament);
     console.log('Torneos:', tournaments.value);
+    tournaments.value = participaciones.value.map(p => p.tournament);
   } catch (error) {
     console.error('Error fetching tournaments:', error);
   }

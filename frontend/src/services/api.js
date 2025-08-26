@@ -33,11 +33,17 @@ export default {
   createTournament(tournamentData) {
     return apiClient.post('/tournament', tournamentData);
   },
+  createParticipante(participanteData) {
+    return apiClient.post('/participante', participanteData);
+  },
   getTournaments() {
     return apiClient.get('/tournament/all');
   },
   getParticipaciones() {
     return apiClient.get('/participante/byUser');
+  },
+  getParticipantesPorTorneo(tournamentId) {
+    return apiClient.get(`/participante/all?tournament=${tournamentId}`);
   },
   getTournamentById(tournamentId) {
     return apiClient.get(`/tournament/${tournamentId}`);
@@ -47,6 +53,19 @@ export default {
   },
   getPartidosByCompetitionId(competitionId, round = 4) {
     return apiClient.get(`/partido/all?competition=${competitionId}&limit=1000&half=2&round=${round}`);
+  },
+  // Predicciones
+  savePrediction(predictionData) {
+    return apiClient.post('/prediction', predictionData);
+  },
+  getPredictionsByParticipante(participanteId) {
+    return apiClient.get(`/prediction/byParticipante/${participanteId}`);
+  },
+  getPredictionsByPartido(partidoId) {
+    return apiClient.get(`/prediction/byPartido/${partidoId}`);
+  },
+  updatePrediction(predictionId, predictionData) {
+    return apiClient.put(`/prediction/${predictionId}`, predictionData);
   },
   // Agrega otras llamadas a la API aquí
 };
