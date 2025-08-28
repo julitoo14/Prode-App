@@ -58,6 +58,9 @@ export default {
   savePrediction(predictionData) {
     return apiClient.post('/prediction', predictionData);
   },
+  savePredictionsBatch(predictions) {
+    return apiClient.post('/prediction/batch', { predictions });
+  },
   getPredictionsByParticipante(participanteId) {
     return apiClient.get(`/prediction/byParticipante/${participanteId}`);
   },

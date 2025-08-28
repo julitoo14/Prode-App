@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.46% </span>
+                <span class="strong">95.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>64/65</span>
+                <span class='fraction'>68/71</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.83% </span>
+                <span class="strong">89.28% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>23/24</span>
+                <span class='fraction'>25/28</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.46% </span>
+                <span class="strong">95.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>64/65</span>
+                <span class='fraction'>68/71</span>
             </div>
         
             
@@ -193,7 +193,20 @@
 <a name='L128'></a><a href='#L128'>128</a>
 <a name='L129'></a><a href='#L129'>129</a>
 <a name='L130'></a><a href='#L130'>130</a>
-<a name='L131'></a><a href='#L131'>131</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
@@ -237,6 +250,12 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
@@ -284,6 +303,13 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -369,7 +395,13 @@ const createTournament = async (params) =&gt; {
             throw new AppError(404, "Creator not found");
         }
 &nbsp;
-        const tournament = new Tournament({ ...validatedParams });
+        // Filter out null password before creating tournament
+        const tournamentData = { ...validatedParams };
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (tournamentData.password === null) {
+<span class="cstat-no" title="statement not covered" >            delete tournamentData.password;</span>
+        }
+&nbsp;
+        const tournament = new Tournament(tournamentData);
         await tournament.save();
 &nbsp;
         // Automatically create a participant for the creator
@@ -389,7 +421,7 @@ const createTournament = async (params) =&gt; {
             throw error;
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        throw new AppError(400, "Error creating tournament");</span>
+<span class="cstat-no" title="statement not covered" >        throw new AppError(400, "Error creating tournament " + error.message);</span>
     }
 };
 &nbsp;
@@ -416,9 +448,16 @@ const updateTournament = async (id, creatorId, params) =&gt; {
                 "User is not the creator of the tournament"
             );
         }
+        
+        // Filter out null password before updating tournament
+        const updateData = { ...validatedParams };
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (updateData.password === null) {
+<span class="cstat-no" title="statement not covered" >            delete updateData.password;</span>
+        }
+        
         const updatedTournament = await Tournament.findByIdAndUpdate(
             id,
-            validatedParams,
+            updateData,
             { new: true }
         );
         return updatedTournament;
@@ -460,7 +499,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-13T22:38:35.697Z
+                at 2025-08-28T15:57:30.029Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

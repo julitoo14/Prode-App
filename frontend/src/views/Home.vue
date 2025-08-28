@@ -27,16 +27,10 @@ const { user } = useAuth();
         <router-link to="/torneos">
           <button class="w-full h-32 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-xl shadow-lg flex flex-col items-center justify-center text-lg transition-transform transform hover:scale-105">
             <img src="/icons/briefcase.svg" alt="Ver Torneos" class="w-10 h-10 mb-2">
-            <span>Ver Torneos</span>
+            <span>Ver Mis Torneos</span>
           </button>
         </router-link>
 
-        <router-link to="/competiciones">
-          <button class="w-full h-32 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-xl shadow-lg flex flex-col items-center justify-center text-lg transition-transform transform hover:scale-105">
-            <img src="/icons/estadistica.svg" alt="Ver Competiciones" class="w-10 h-10 mb-2">
-            <span>Ver Competiciones</span>
-          </button>
-        </router-link>
       </div>
     </div>
   </BaseLayout>

@@ -1,6 +1,7 @@
 const Prediction = require('../models/Prediction');
 const Participante = require('../models/Participante');
 const Partido = require('../models/Partido');
+const Tournament = require('../models/Tournament');
 const AppError = require('../utils/AppError');
 
 const updateScore = async (partidoId) => {

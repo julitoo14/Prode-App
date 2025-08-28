@@ -19,6 +19,21 @@ router.post('/', auth, async (req, res, next) => {
     }
 });
 
+// Crear o actualizar múltiples predicciones
+router.post('/batch', auth, async (req, res, next) => {
+    try {
+        const results = await predictionService.upsertBatch(req.body.predictions);
+        res.status(200).json({
+            success: true,
+            data: {
+                results
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
 // Obtener predicciones por participante
 router.get('/byParticipante/:participanteId', auth, async (req, res, next) => {
     try {

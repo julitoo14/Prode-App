@@ -44,7 +44,13 @@ const createTournament = async (params) => {
             throw new AppError(404, "Creator not found");
         }
 
-        const tournament = new Tournament({ ...validatedParams });
+        // Filter out null password before creating tournament
+        const tournamentData = { ...validatedParams };
+        if (tournamentData.password === null) {
+            delete tournamentData.password;
+        }
+
+        const tournament = new Tournament(tournamentData);
         await tournament.save();
 
         // Automatically create a participant for the creator
@@ -64,7 +70,7 @@ const createTournament = async (params) => {
             throw error;
         }
 
-        throw new AppError(400, "Error creating tournament");
+        throw new AppError(400, "Error creating tournament " + error.message);
     }
 };
 
@@ -91,9 +97,16 @@ const updateTournament = async (id, creatorId, params) => {
                 "User is not the creator of the tournament"
             );
         }
+        
+        // Filter out null password before updating tournament
+        const updateData = { ...validatedParams };
+        if (updateData.password === null) {
+            delete updateData.password;
+        }
+        
         const updatedTournament = await Tournament.findByIdAndUpdate(
             id,
-            validatedParams,
+            updateData,
             { new: true }
         );
         return updatedTournament;

@@ -18,7 +18,8 @@ const TournamentSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false,
+        default: null
     },
     status: {
         type: String,

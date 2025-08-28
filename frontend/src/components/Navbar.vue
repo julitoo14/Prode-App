@@ -12,7 +12,7 @@ const guestItems = [
 
 const authItems = [
   { name: 'Inicio', icon: '🏠', route: '/' },
-  { name: 'Torneos', icon: '🏆', route: '/torneos' },
+  { name: 'Mis Torneos', icon: '🏆', route: '/torneos' },
   { name: 'Perfil', icon: '👤', route: '/profile' },
 ]
 

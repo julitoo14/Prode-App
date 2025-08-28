@@ -9,6 +9,8 @@ const { user } = useAuth();
 const tournamentName = ref('');
 const selectedCompetition = ref('');
 const password = ref('');
+const selectedRules = ref('default');
+const isPrivate = ref(false);
 const competitions = ref([]);
 const errorMessage = ref('');
 const successMessage = ref('');
@@ -23,8 +25,13 @@ onMounted(async () => {
 });
 
 const createTournament = async () => {
-  if (!tournamentName.value || !selectedCompetition.value || !password.value) {
-    errorMessage.value = 'Por favor, completa todos los campos.';
+  if (!tournamentName.value || !selectedCompetition.value) {
+    errorMessage.value = 'Por favor, completa todos los campos obligatorios.';
+    return;
+  }
+
+  if (isPrivate.value && !password.value) {
+    errorMessage.value = 'La contraseña es obligatoria para torneos privados.';
     return;
   }
 
@@ -32,17 +39,23 @@ const createTournament = async () => {
     const tournamentData = {
       name: tournamentName.value,
       competition: selectedCompetition.value,
-      password: password.value,
-      creator: user.value._id
+      password: isPrivate.value ? password.value : null,
+      creator: user.value._id,
+      rules: selectedRules.value
     };
+
     const response = await api.createTournament(tournamentData);
+    console.log(response)
     successMessage.value = '¡Torneo creado exitosamente!';
     // Limpiar formulario
     tournamentName.value = '';
     selectedCompetition.value = '';
     password.value = '';
+    selectedRules.value = 'default';
+    isPrivate.value = false;
     errorMessage.value = '';
   } catch (error) {
+    console.log(error)
     errorMessage.value = 'Error al crear el torneo. Inténtalo de nuevo.';
     successMessage.value = '';
   }
@@ -71,8 +84,32 @@ const createTournament = async () => {
             </select>
           </div>
 
-          <div class="mb-6">
-            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña del Torneo</label>
+          <div class="mb-4">
+            <label for="rules" class="block text-gray-700 text-sm font-bold mb-2">Tipo de Reglas</label>
+            <select v-model="selectedRules" id="rules" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <option value="default">Por Defecto</option>
+              <option value="partial">Parcial</option>
+              <option value="difference">Diferencia</option>
+            </select>
+            <p class="text-gray-600 text-xs mt-1">
+              <span v-if="selectedRules === 'default'">Reglas estándar de puntuación (Resultado exacto 3 puntos, 1 punto en caso de acertar el ganador)</span>
+              <span v-else-if="selectedRules === 'partial'">Se otorgan puntos parciales por cada equipo acertado siempre que se acierte el ganador (Resultado exacto = 3 puntos, ganador y cantidad de goles de algun equipo = 2 puntos, ganador = 1 punto)</span>
+              <span v-else-if="selectedRules === 'difference'">Puntuación basada en la diferencia de goles (Resultado exacto = 3 puntos, misma diferencia de gol y ganado = 2 puntos, solo ganador = 1 punto)</span>
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <label class="flex items-center">
+              <input v-model="isPrivate" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700 text-sm font-bold">Torneo Privado</span>
+            </label>
+            <p class="text-gray-600 text-xs mt-1">
+              {{ isPrivate ? 'El torneo será privado y requerirá contraseña' : 'Si no marcas esta casilla, el torneo será público y accesible para todos' }}
+            </p>
+          </div>
+
+          <div class="mb-6" v-if="isPrivate">
+            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña del Torneo *</label>
             <input v-model="password" id="password" type="password" placeholder="******************" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
           </div>
 

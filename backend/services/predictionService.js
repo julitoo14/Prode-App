@@ -3,7 +3,7 @@ const Participante = require('../models/Participante');
 const Partido = require('../models/Partido');
 const AppError = require('../utils/AppError');
 const { ZodError } = require('zod');
-const { createPredictionSchema, updatePredictionSchema} = require('../helpers/validationSchemas');
+const { createPredictionSchema, updatePredictionSchema, batchPredictionSchema} = require('../helpers/validationSchemas');
 
 const create = async (params) => {
     try{
@@ -95,6 +95,79 @@ const update = async (id, params) => {
     }
 }
 
+const upsertBatch = async (predictions) => {
+    try {
+        // Validar el formato del batch
+        const validatedData = batchPredictionSchema.parse({ predictions });
+        const validatedPredictions = validatedData.predictions;
+        
+        const results = [];
+        const errors = [];
+        
+        for (const predData of validatedPredictions) {
+            try {
+                // Verificar si ya existe una predicción
+                const existingPrediction = await Prediction.findOne({
+                    participante: predData.participante,
+                    partido: predData.partido
+                });
+
+                // Validar tiempo límite
+                const partido = await Partido.findById(predData.partido);
+                if (!partido) {
+                    errors.push({
+                        partido: predData.partido,
+                        error: 'Partido not found'
+                    });
+                    continue;
+                }
+
+                const now = new Date();
+                const matchDate = new Date(partido.fecha);
+                const diff = matchDate - now;
+                if (diff < 10 * 60 * 1000) {
+                    errors.push({
+                        partido: predData.partido,
+                        error: 'Cannot save prediction less than 10 minutes before match'
+                    });
+                    continue;
+                }
+
+                let result;
+                if (existingPrediction) {
+                    // Actualizar predicción existente
+                    result = await Prediction.findByIdAndUpdate(
+                        existingPrediction._id, 
+                        {
+                            golesEquipo1: predData.golesEquipo1,
+                            golesEquipo2: predData.golesEquipo2
+                        }, 
+                        { new: true }
+                    );
+                    results.push({ action: 'updated', prediction: result });
+                } else {
+                    // Crear nueva predicción
+                    const newPrediction = new Prediction(predData);
+                    result = await newPrediction.save();
+                    results.push({ action: 'created', prediction: result });
+                }
+            } catch (error) {
+                errors.push({
+                    partido: predData.partido,
+                    error: error.message
+                });
+            }
+        }
+        
+        return { results, errors };
+    } catch (e) {
+        if (e instanceof ZodError) {
+            throw new AppError(400, 'Invalid batch prediction data', e.errors);
+        }
+        throw e;
+    }
+}
+
 const deletePrediction = async (id) => {
     const prediction = await Prediction.findByIdAndDelete(id).exec();
     if (!prediction) {
@@ -109,5 +182,6 @@ module.exports = {
     getByParticipante,
     getByPartido,
     update,
+    upsertBatch,
     deletePrediction
 }
