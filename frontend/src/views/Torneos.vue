@@ -30,7 +30,7 @@ onMounted(() => {
 
 <template>
   <BaseLayout>
-    <div class="p-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-2/3 mx-auto">
+    <div class="p-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-5/6 mx-auto">
       <RouterLink
         :to="`/torneo/${tournament._id}`"
         v-for="tournament in tournaments"

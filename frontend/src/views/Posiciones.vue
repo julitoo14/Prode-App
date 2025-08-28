@@ -1,6 +1,6 @@
 <template>
     <BaseLayout>
-        <div class=" w-2/4 mx-auto p-4">
+        <div class=" w-full sm:w-2/4 mx-auto p-4">
             <div class="flex items-center mb-4 gap-x-4 w-full justify-start">
 
                 <button

@@ -562,9 +562,9 @@ watch([selectedRound], async () => {
               </div>
 
               <!-- Equipo 1 -->
-              <div class="flex items-center min-w-0 gap-1 pr-1 sm:gap-2 sm:pr-2 flex-1 min-[0px]:basis-0">
-                <img :src="partido.equipo1Image" alt="" class="w-5 h-5 sm:w-10 sm:h-10 object-contain" />
-                <span class="font-medium text-gray-700 truncate leading-tight text-xs sm:text-base">{{ shortName(partido.equipo1) }}</span>
+              <div class="flex items-center justify-center sm:justify-start min-w-0 gap-1 pr-1 sm:gap-2 sm:pr-2 flex-1 min-[0px]:basis-0">
+                <img :src="partido.equipo1Image" alt="" class="w-8 h-8 sm:w-10 sm:h-10 object-contain" />
+                <span class="hidden sm:block font-medium text-gray-700 truncate leading-tight text-xs sm:text-base">{{ shortName(partido.equipo1) }}</span>
               </div>
 
               <!-- Marcador / Predicción -->
@@ -685,9 +685,9 @@ watch([selectedRound], async () => {
               </div>
 
               <!-- Equipo 2 -->
-              <div class="flex items-center justify-end min-w-0 gap-1 pl-1 pr-2 sm:gap-2 sm:pl-2 sm:pr-3 flex-1 min-[0px]:basis-0">
-                <span class="font-medium text-gray-700 truncate leading-tight text-right text-xs sm:text-base">{{ shortName(partido.equipo2) }}</span>
-                <img :src="partido.equipo2Image" alt="" class="w-5 h-5 sm:w-10 sm:h-10 object-contain" />
+              <div class="flex items-center justify-center sm:justify-end min-w-0 gap-1 pl-1 pr-2 sm:gap-2 sm:pl-2 sm:pr-3 flex-1 min-[0px]:basis-0">
+                <span class="hidden sm:block font-medium text-gray-700 truncate leading-tight text-right text-xs sm:text-base">{{ shortName(partido.equipo2) }}</span>
+                <img :src="partido.equipo2Image" alt="" class="w-8 h-8 sm:w-10 sm:h-10 object-contain" />
               </div>
             </div>
           </div>
