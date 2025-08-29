@@ -25,3 +25,20 @@ if (token) {
 } else {
   app.mount('#app');
 }
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  import('virtual:pwa-register').then(({ registerSW }) => {
+    const updateSW = registerSW({
+      immediate: true,
+      onNeedRefresh() {
+        if (confirm('Nueva versión disponible. ¿Actualizar la aplicación?')) {
+          updateSW(true);
+        }
+      },
+      onOfflineReady() {
+        console.log('App lista para funcionar offline');
+      },
+    });
+  });
+}

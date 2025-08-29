@@ -15,17 +15,15 @@ const errorHandler = require('./middlewares/errorHandler');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/auth', userRoutes);
-app.use('/tournament', tournamentRoutes);
-app.use('/competition', competitionRoutes);
-app.use('/participante', participanteRoutes);
-app.use('/partido', partidoRoutes);
-app.use('/prediction', predictionRoutes);
-app.use(express.static(path.join(__dirname, '/dist')));
+app.use('/api/auth', userRoutes);
+app.use('/api/tournament', tournamentRoutes);
+app.use('/api/competition', competitionRoutes);
+app.use('/api/participante', participanteRoutes);
+app.use('/api/partido', partidoRoutes);
+app.use('/api/prediction', predictionRoutes);
+app.get('/health', (req, res) => res.json({ ok: true }));
+// app.use(express.static(path.join(__dirname, '/dist')));
 app.use(errorHandler);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/dist/index.html'));
-});
 
 module.exports = app;

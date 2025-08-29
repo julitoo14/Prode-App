@@ -5,11 +5,6 @@ import { useAuth } from '../store/auth';
 const router = useRouter()
 const { isAuthenticated, logout } = useAuth();
 
-const guestItems = [
-  { name: 'Login', route: '/login' },
-  { name: 'Register', route: '/register' },
-];
-
 const authItems = [
   { name: 'Inicio', icon: '🏠', route: '/' },
   { name: 'Mis Torneos', icon: '🏆', route: '/torneos' },
@@ -23,7 +18,7 @@ const navigate = (route) => {
 </script>
 
 <template>
-  <nav class="fixed bottom-0 w-full bg-white border-t flex justify-evenly py-2 md:static md:top-0 md:flex md:justify-center md:space-x-8 md:border-b md:py-4 md:bg-transparent">
+  <nav class="fixed bottom-0 w-full bg-white border-t flex justify-evenly py-8 md:static md:top-0 md:flex md:justify-center md:space-x-8 md:border-b md:py-4 md:bg-transparent">
       <button
         v-for="item in authItems"
         :key="item.route"
